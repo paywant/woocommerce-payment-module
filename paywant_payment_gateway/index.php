@@ -29,7 +29,7 @@ function paywant_init_woocommerce()
 
 function paywant_init_scripts()
 {
-    
+    wp_enqueue_script('paywant_custom_js', 'https://secure.paywant.com/js/paywant.js');
 }
 
 function WooCommerce_Paywant()
@@ -135,11 +135,11 @@ function WooCommerce_Paywant()
 			$hashOlustur = base64_encode(hash_hmac('sha256',"$userAccountName|$userEmail|$userID".$this->get_option('paywant_api_key'),$this->get_option('paywant_api_secret'),true));
 			
 			$productData = array(
-			"name" =>  $order_id." Sipariş Ödemesi", // Ürün adı 
-			"amount" => (int) (number_format($order->get_total(), 2, '.', '') * 100), 				// Ürün fiyatı, 10 TL : 1000
-			"extraData" => $order_id,				// Notify sayfasına iletilecek ekstra veri
-			"paymentChannel" => "1,2,3",	// Bu ödeme için kullanılacak ödeme kanalları
-			"commissionType" => 1			// Komisyon tipi, 1: Üstlen, 2: Yansıt ( Sadece alt yapı komisyonlarını yansıtır), 3: Tüm komisyonları yansıt (Paywant komisyonu dahil yansıtır)
+				"name" =>  $order_id." Sipariş Ödemesi", // Ürün adı 
+				"amount" => (int) (number_format($order->get_total(), 2, '.', '') * 100), 				// Ürün fiyatı, 10 TL : 1000
+				"extraData" => $order_id,				// Notify sayfasına iletilecek ekstra veri
+				"paymentChannel" => "1,2,3",	// Bu ödeme için kullanılacak ödeme kanalları
+				"commissionType" => 1			// Komisyon tipi, 1: Üstlen, 2: Yansıt ( Sadece alt yapı komisyonlarını yansıtır), 3: Tüm komisyonları yansıt (Paywant komisyonu dahil yansıtır)
 			);
 
 			$requestBody = array(
@@ -186,6 +186,11 @@ function WooCommerce_Paywant()
                 <div id="paywant-area">
                     <iframe src="<?php echo $result->message; ?>" id="paywantiframe" frameborder="0" scrolling="no" style="width: 100%;"></iframe>
                 </div>
+				<script type="text/javascript">
+					setTimeout(function(){ 
+						iFrameResize({},'#paywantiframe');
+					}, 1000);
+				</script>
 			<?php
             }
             else
