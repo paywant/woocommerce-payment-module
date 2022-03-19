@@ -136,9 +136,9 @@ function WooCommerce_Paywant()
 			
 			$productData = array(
 				"name" =>  $order_id." Sipariş Ödemesi", // Ürün adı 
-				"amount" => (int) (number_format($order->get_total(), 2, '.', '') * 100), 				// Ürün fiyatı, 10 TL : 1000
+				"amount" => bcmul(bcmul($order->get_total(),1,2),100), 				// Ürün fiyatı, 10 TL : 1000
 				"extraData" => $order_id,				// Notify sayfasına iletilecek ekstra veri
-				"paymentChannel" => "1,2,3",	// Bu ödeme için kullanılacak ödeme kanalları
+				"paymentChannel" => "0",	// Bu ödeme için kullanılacak ödeme kanalları
 				"commissionType" => 1			// Komisyon tipi, 1: Üstlen, 2: Yansıt ( Sadece alt yapı komisyonlarını yansıtır), 3: Tüm komisyonları yansıt (Paywant komisyonu dahil yansıtır)
 			);
 
