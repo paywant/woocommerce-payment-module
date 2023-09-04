@@ -150,7 +150,9 @@ function WooCommerce_Paywant()
 				'userIPAddress' => $userIPAdresi,
 				'userID' => $userID,
 				'proApi' => true,
-				'productData' => $productData
+				'productData' => $productData,
+				'redirect_url' => $order->get_checkout_order_received_url(),
+				'fail_redirect_url' => $order->get_checkout_payment_url()
 			);
 			
             $args = [
