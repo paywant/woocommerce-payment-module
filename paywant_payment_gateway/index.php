@@ -175,18 +175,18 @@ function WooCommerce_Paywant()
 
             try
             {
-                $result = json_decode($result);
+                $decodedResult = json_decode($result);
             }
             catch (Exception $ex)
             {
                 return 'Failed to handle response';
             }
 
-            if ($result->status == true)
+            if ($decodedResult->status == true)
             {
                 ?>
                 <div id="paywant-area">
-                    <iframe src="<?php echo $result->message; ?>" id="paywantiframe" frameborder="0" scrolling="no" style="width: 100%;"></iframe>
+                    <iframe src="<?php echo $decodedResult->message; ?>" id="paywantiframe" frameborder="0" scrolling="no" style="width: 100%;"></iframe>
                 </div>
 				<script type="text/javascript">
 					setTimeout(function(){ 
